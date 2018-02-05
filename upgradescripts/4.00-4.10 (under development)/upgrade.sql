@@ -224,6 +224,12 @@ set @resources='
   <LocaleResource Name="Admin.Catalog.Products.ProductAttributes.Attributes.Values.Fields.PriceAdjustment.Hint">
     <Value>The price adjustment applied when choosing this attribute value. For example ''10'' to add 10 dollars. Or 10% if ''Use percentage'' is ticked.</Value>
   </LocaleResource> 
+  <LocaleResource Name="Admin.Configuration.Settings.GeneralCommon.SitemapPageSize">
+    <Value>Sitemap page size</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.Settings.GeneralCommon.SitemapPageSize.Hint">
+    <Value>A number of items displayed on one sitemap page.</Value>
+  </LocaleResource>
 </Language>
 '
 
@@ -493,4 +499,12 @@ GO
 UPDATE [Setting]
 SET [Value] = N'true'
 WHERE [Name] = N'commonsettings.usestoredprocedureforloadingcategories'
+GO
+
+--new setting
+IF NOT EXISTS (SELECT 1 FROM [Setting] WHERE [name] = N'commonsettings.sitemappagesize')
+BEGIN
+    INSERT [Setting] ([Name], [Value], [StoreId])
+    VALUES (N'commonsettings.sitemappagesize', N'200', 0)
+END
 GO
